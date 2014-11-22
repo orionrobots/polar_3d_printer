@@ -1,0 +1,9 @@
+http://www.micromo.com/microstepping-myths-and-realities
+
+Standard stepper is often 1.8 degrees.
+
+What is the best resolution I can expect?
+
+22/11/2014 12:07:
+the lego nxt motor is 360 ticks per turn.. Lets feed in 1 degree and see what it looks like
+
