@@ -23,8 +23,8 @@ class ErrorToRedscale:
         disty2 = disty * disty
         sqdist = distx2 + disty2
         index = int(sqdist / self.per_division)
-        if index != 0:
-            print("%s != %s : %s" % (intended, actual, index))
+        # if index != 0:
+        #     print("%s != %s : %s" % (intended, actual, index))
         index = min(index, len(self.colors) - 1)
         return self.colors[index]
 
@@ -62,7 +62,6 @@ class PlotBasicKinematic:
         self.hw = hw
         self.color_scale = color_scale
         self.fail_color = fail_color
-        self.step_distance = math.radians(1.8)
 
     def get_position(self, x, y):
         #get the info from the kine simulation
@@ -82,8 +81,12 @@ class PlotBasicKinematic:
 
         return color
 
+normal_stepper = 1.8
+lego_encoder = 1
+geared_down = 1.8/2
 
 class PlotWithStepperResolution(PlotBasicKinematic):
+    step_distance = math.radians(lego_encoder / 2)
     def round_to_step(self, angle_rads):
         mult = round(angle_rads / self.step_distance)
         return mult * self.step_distance
@@ -133,7 +136,8 @@ def main():
         for y in range(0, height - 1):
             color = plot.get_position(x, y)
             draw.line(screen, color, (x, y), (x+1, y))
-        pygame.display.update()
+        if x % 100 == 0:
+            pygame.display.update()
     image.save(screen, "test_output.png")
 
 if __name__ == "__main__":
