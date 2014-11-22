@@ -7,3 +7,6 @@ What is the best resolution I can expect?
 22/11/2014 12:07:
 the lego nxt motor is 360 ticks per turn.. Lets feed in 1 degree and see what it looks like
 
+The rep-rap stepper page talks of half steps and quarter steps - so we may be able to do this.
+
+http://reprap.org/wiki/Stepper_motor_driver
