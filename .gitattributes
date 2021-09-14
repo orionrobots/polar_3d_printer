@@ -1,0 +1,5 @@
+* text=auto
+
+# File type
+*.py=text
+.gitignore=text

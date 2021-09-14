@@ -8,22 +8,18 @@ from kinematic_2arm_bone import Kinematic2Bone
 class ErrorToRedscale:
     def __init__(self, colors, scale):
         self.colors = colors
-        sqscale = scale * scale
         # if we have 20 colours
         # and 400 scale (400 sq)
         # then we want 1 colour change for every 20 out.
         # and max out at the last one
-        self.per_division = sqscale / len(colors)
+        self.per_division = scale / len(colors)
         print("Per division is %s" % self.per_division)
         self.max_color_index = len(self.colors) - 1
 
     def get_color(self, intended, actual):
         distx = intended[0] - actual[0]
-        distx2 = distx * distx
         disty = intended[1] - actual[1]
-        disty2 = disty * disty
-        sqdist = distx2 + disty2
-        index = int(sqdist / self.per_division)
+        index = int(math.hypot(distx, disty) / self.per_division)
         # if index != 0:
         #     print("%s != %s : %s" % (intended, actual, index))
         index = min(index, self.max_color_index)
@@ -72,7 +68,7 @@ lego_encoder = 1
 geared_down = 1.8/4
 
 class PlotWithStepperResolution(PlotBasicKinematic):
-    step_distance = math.radians(geared_down)
+    step_distance = math.radians(lego_encoder / 8)
     def round_to_step(self, angle_rads):
         return angle_rads - math.fmod(angle_rads, self.step_distance)
 
@@ -101,7 +97,7 @@ def main():
     red, white = setup_colors()
 
     redscale = [[n, 255 - n, 0] for n in range(0, 254, 10)]
-    size = width, height = 1080, 1080
+    size = width, height = 1500, 1500
     screen = pygame.display.set_mode(size)
     screen.fill(white)
 

@@ -10,3 +10,37 @@ the lego nxt motor is 360 ticks per turn.. Lets feed in 1 degree and see what it
 The rep-rap stepper page talks of half steps and quarter steps - so we may be able to do this.
 
 http://reprap.org/wiki/Stepper_motor_driver
+---
+If I want a print bed of 150mm by 150mm, with a resolution of 0.1mm
+ Then this is 1500 by 1500. How bad does the plot look at that res?
+
+23/11/2014 10:31: Next plan - draw lines with it - make a simple plotting library.
+Plan must be:
+The output stage:
+    - convert an angle into a number of steps based on stepper characteristics.
+    - go through another stage that plots them on screen transforming steps into on screen movements.
+    - Takes the stream of middle stage instructions, along with annotations (tool down, tool up).
+The input stage - for now, just call to a line function - x,y, x2, y2, and moveto x,y function.
+The middle stage - take the line, return a stream of coordinates for the plotting points here.
+
+The basics of the middle stage works. The input stage can be a test env. So build the output stages.
+
+Build a KineToSteppers class.
+Build a SteppersToScreen class (the pygame output/render stage)
+
+KineToSteppers takes:
+  - Machine output class
+  - Input stream
+    a1, a2, tool_params
+  - Machine output will get stream of:
+    * stepper1 en, dir, stepper 2 en, dir,tool params
+    * machine output will block until machine has reached the position needed.
+
+ok - expect a homing pin/switch under the position we call 0,0 - where the disk is directly centered under the
+
+https://github.com/unlimitedbacon/Marlin/blob/bipolar/Marlin/motion_control.cpp
+http://forums.reprap.org/read.php?185,178379,206119
+http://www.3ders.org/articles/20131227-rotary-3d-printers-under-development.html
+
+
+

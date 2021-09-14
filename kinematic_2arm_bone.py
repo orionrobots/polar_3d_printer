@@ -2,6 +2,25 @@
 """
 import math
 
+class CartesianToKine:
+    def __init__(self, bipolar_radius):
+        self.bipolar_radius = bipolar_radius
+
+    def to_bipol(self, x, y):
+        """Convert set of cartesian coordinates to bipolar ones"""
+        theta2 = 2 * math.asin(math.hypot(x, y) / (2 * self.bipolar_radius))
+        theta1 = (math.pi - theta2) / 2 - math.atan2(y, x)
+        return math.degrees(theta1), math.degrees(theta2)
+
+    def to_cart(self, theta1, theta2):
+        """Convert a set of bipolar coordinates to cartesian ones"""
+        theta1 = math.radians(theta1)
+        theta2 = math.radians(theta2)
+        theta = ((math.pi - theta2)/2) - theta1
+        r = 2 * self.bipolar_radius * math.sin(theta2/2)
+        return r * math.cos(theta), r * math.sin(theta)
+
+
 
 class Kinematic2Bone:
     """System for positioning two bones to reach a target from origin. Set up static items first,
